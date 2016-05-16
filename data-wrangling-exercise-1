@@ -1,0 +1,53 @@
+refine_original <- read.csv(file="C:/Users/GamingFoSho/Dropbox/WORKSPACE GAMINGFOSHO/AoF GFS Data Science and IT/REF R/rwd/refine_original.csv", header=TRUE, sep=",")
+rdf <- data.frame(refine_original)
+library(tidyr)
+library(dplyr)
+
+#Clean up brand names
+new_rdf <- rdf %>% mutate(company = tolower(company), len = nchar(company), first_char = substr(company, 1, 1))
+comp <- new_rdf$first_char
+comp1 <- sub("^[P p]", "philips", comp)
+comp2 <- sub("^[A a]", "akzo", comp1)
+comp3 <- sub("^[v]", "van houten", comp2)
+comp4 <- sub("^[u]", "unilever", comp3)
+comp5 <- sub("^[f]", "philips", comp4)
+new_rdf1 <- mutate(new_rdf, companies = comp5)
+new_rdf2 <- mutate(new_rdf1, company = companies)
+
+#Separate product code and number
+new_rdf3 <- separate(new_rdf2, Product.code...number, c("product_code", "product_number"), sep = "-")
+
+#Add product categories
+pcvec <- new_rdf3$product_code
+pcvec1 <- sub("[p]", "Smartphone", pcvec)
+pcvec2 <- sub("[x]", "Laptop", pcvec1)
+pcvec3 <- sub("[q]", "Tablet", pcvec2)
+pcvec4 <- sub("[v]", "TV", pcvec3)
+new_rdf4 <- mutate(new_rdf3, Product_category = pcvec4)
+
+#Add full address for geocoding
+new_rdf5 <- unite(new_rdf4, full_address, address, city, country, sep = ", ")
+
+#Eliminating unnecessary columns
+new_rdf5$first_char <- NULL      
+new_rdf5$len <- NULL
+new_rdf5$companies <- NULL
+
+#Create dummy variables for company and product category
+c_philips_vec <- ifelse(new_rdf5$company == "philips", 1, 0)
+new_rdf6 <- mutate(new_rdf5, company_philips = c_philips_vec)
+c_akzo_vec <- ifelse(new_rdf5$company == "akzo", 1, 0)
+c_unilever_vec <- ifelse(new_rdf5$company == "unilever", 1, 0)
+c_van_houten_vec <- ifelse(new_rdf5$company == "van houten", 1, 0)
+new_rdf7 <- mutate(new_rdf6, company_akso = c_akzo_vec)
+new_rdf8 <- mutate(new_rdf7, company_unilever = c_unilever_vec)
+new_rdf9 <- mutate(new_rdf8, company_van_houten = c_van_houten_vec)
+p_s_vec <- ifelse(new_rdf9$Product_category == "Smartphone", 1, 0)
+p_tv_vec <- ifelse(new_rdf9$Product_category == "TV", 1, 0)
+p_l_vec <- ifelse(new_rdf9$Product_category == "Laptop", 1, 0)
+p_t_vec <- ifelse(new_rdf9$Product_category == "Tablet", 1, 0)
+new_rdf10 <- mutate(new_rdf9, product_smartphone = p_s_vec)
+new_rdf11 <- mutate(new_rdf10, product_tv = p_tv_vec)
+new_rdf12 <- mutate(new_rdf11, product_laptop = p_l_vec)
+new_rdf13 <- mutate(new_rdf12, product_tablet = p_t_vec)
+write.csv(new_rdf13, file = "refine_clean.csv", row.names=FALSE)
