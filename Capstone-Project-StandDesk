@@ -1,0 +1,71 @@
+standdesk_info <- read.csv(file = "C:/Users/GamingFoSho/Documents/wdR/cp_id_only.csv", header=TRUE, sep=",", na.strings = "")
+sdi_df <- data.frame(standdesk_info)
+sdi_df[1:3,]
+na_count <- sapply(sdi_df, function(y) sum(length(which(is.na(y)))))
+na_count
+library(tidyr)
+library(dplyr)
+count(sdi_df)
+sdi_df$Shopify.Product.Tags  <- NULL   
+sdi_df$First.Referring.Site <- NULL   
+sdi_df$ReferrerEmail <- NULL  
+sdi_df$ReferrerID <- NULL   
+sdi_df$ReferrerName <- NULL  
+sdi_df$Abandoned.Cart.Date <- NULL  
+sdi_df$When.is.a.good.time.for.us.to.reach.back.out. <- NULL   
+sdi_df$What.are.you.inquiring.about.  <- NULL  
+sdi_df$Upload.Photo <- NULL  
+sdi_df$Top.Choice <- NULL  
+sdi_df$Number.of.Employees <- NULL  
+sdi_df$Mobile.Phone.Number <- NULL  
+sdi_df$Lead.Status  <- NULL  
+sdi_df$Emails.Bounced <- NULL  
+sdi_df$Opted.out.of.email...WorkLife.The.StandDesk.Blog.Subscription <- NULL  
+sdi_df$Opted.out.of.email..Marketing.Information  <- NULL  
+sdi_df$Focus <- NULL  
+sdi_df$Media.Type <- NULL  
+sdi_df$Moving.Notes <- NULL  
+sdi_df$New.Lead.Discount.Page <- NULL   
+sdi_df$Product.Service  <- NULL  
+sdi_df$Any.Special.Requests. <- NULL  
+sdi_df$Frame.Color..Black <- NULL  
+sdi_df$Frame.Color..Silver <- NULL  
+sdi_df$How.many.employees.will.be.getting.a.new.desk. <- NULL   
+sdi_df$Installation.Special.Requests  <- NULL  
+sdi_df$Pick.A.Frame  <- NULL  
+sdi_df$Pick.a.Top  <- NULL  
+sdi_df$Special.Requests.for.installation.service. <- NULL   
+sdi_df$Would.You.Like.Anti.Fatigue.Mats.  <- NULL  
+sdi_df$Would.You.Like.Integrated.12.Port.Powerstrips. <- NULL   
+sdi_df$Last.Products.Bought.Product.2.URL  <- NULL  
+sdi_df$Last.Products.Bought.Product.3.URL  <- NULL  
+sdi_df$What.would.you.likely.use.as.an.alternative.to.StandDesk. <- NULL   
+sdi_df$What.type.of.person.would.benefit.most.from.StandDesk.  <- NULL  
+sdi_df$What.is.the.primary.benefit..received.from.StandDesk.  <- NULL  
+sdi_df$How.would.you.feel.if.you.could.no.longer.use.StandDesk.  <- NULL  
+sdi_df$How.can.we.improve.StandDesk.to.better.meet.your.needs. <- NULL  
+sdi_df$Shopify.Customer.Tags  <- NULL  
+na_count <- sapply(sdi_df, function(y) sum(length(which(is.na(y)))))
+na_count
+sdi_df$Job.Title <- NULL       
+sdi_df$Where.can.StandDesk.help.you.most. <- NULL   
+sdi_df$Website.URL <- NULL    
+sdi_df$What.is.the.biggest.challenge.in.your.workspace. <- NULL   
+sdi_df$Are.you.interested.in.additional.accessories. <- NULL    
+sdi_df$Postal.Code <- NULL   
+sdi_df$City <- NULL  
+sdi_df$Country <- NULL   
+glimpse(sdi_df)
+sdi_df$Broadcast.Clicks <- NULL   
+sdi_df$Facebook.Clicks <- NULL   
+sdi_df$Google.Plus.Clicks <- NULL   
+sdi_df$LinkedIn.Clicks <- NULL      
+sdi_df$State.Region <- NULL    
+sdi_df$Last.Products.Bought.HTML <- NULL   
+sdi_df$IP.City <- NULL   
+sdi_df$IP.Country <- NULL   
+sdi_df$IP.Country.Code <- NULL    
+sdi_df$IP.State.Code.Region.Code <- NULL     
+glimpse(sdi_df)
+na_count <- sapply(sdi_df, function(y) sum(length(which(is.na(y)))))
+na_count
