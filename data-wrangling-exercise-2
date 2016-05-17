@@ -1,0 +1,28 @@
+titanic_original <- read.csv(file="C:/Users/GamingFoSho/Documents/titanic_original.csv", header=TRUE, sep=",", na.strings = "")
+to_df <- data.frame(titanic_original)
+library(dplyr)
+library(tidyr)
+
+#Port of embarkation
+emb_vec <- to_df$embarked
+emb_vec <- ifelse(is.na(emb_vec), "S", emb_vec)
+to_df <- mutate(to_df, embarked = emb_vec)
+
+#Age
+age_vec <- to_df$age
+mean_age <- mean(age_vec, na.rm = TRUE)
+age_vec <- ifelse(is.na(age_vec), mean_age, age_vec)
+to_df <- mutate(to_df, age = age_vec)
+
+#Lifeboat
+boat_vec <- to_df$boat
+boat_vec <- ifelse(is.na(boat_vec), "None", boat_vec)
+to_df <- mutate(to_df, boat = boat_vec)
+
+#Cabin
+cabin_num_vec <- to_df$cabin
+cabin_num_vec <- ifelse(is.na(cabin_num_vec), "None", cabin_num_vec)
+cabin_num_vec <- ifelse(cabin_num_vec == "None", 0, 1)
+to_df <- mutate(to_df, has_cabin_number = cabin_num_vec)
+
+write.csv(to_df, file = "titanic_clean.csv", row.names=FALSE)
