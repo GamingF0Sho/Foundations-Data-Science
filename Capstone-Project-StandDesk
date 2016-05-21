@@ -45,8 +45,6 @@ sdi_df$What.is.the.primary.benefit..received.from.StandDesk.  <- NULL
 sdi_df$How.would.you.feel.if.you.could.no.longer.use.StandDesk.  <- NULL  
 sdi_df$How.can.we.improve.StandDesk.to.better.meet.your.needs. <- NULL  
 sdi_df$Shopify.Customer.Tags  <- NULL  
-na_count <- sapply(sdi_df, function(y) sum(length(which(is.na(y)))))
-na_count
 sdi_df$Job.Title <- NULL       
 sdi_df$Where.can.StandDesk.help.you.most. <- NULL   
 sdi_df$Website.URL <- NULL    
@@ -55,7 +53,6 @@ sdi_df$Are.you.interested.in.additional.accessories. <- NULL
 sdi_df$Postal.Code <- NULL   
 sdi_df$City <- NULL  
 sdi_df$Country <- NULL   
-glimpse(sdi_df)
 sdi_df$Broadcast.Clicks <- NULL   
 sdi_df$Facebook.Clicks <- NULL   
 sdi_df$Google.Plus.Clicks <- NULL   
@@ -66,6 +63,131 @@ sdi_df$IP.City <- NULL
 sdi_df$IP.Country <- NULL   
 sdi_df$IP.Country.Code <- NULL    
 sdi_df$IP.State.Code.Region.Code <- NULL     
+
+#changing Average.Order.Value NA to 0
+ave_ord_val_vec <- sdi_df$Average.Order.Value
+ave_ord_val_vec <- ifelse(is.na(ave_ord_val_vec), 0, ave_ord_val_vec)
+sdi_df <- mutate(sdi_df, Average.Order.Value = ave_ord_val_vec)
+sdi_df$Average.Order.Value
+
+#changing Total.Number.of.Orders NA to 0
+Total_Num_Orders_vec <- sdi_df$Total.Number.of.Orders
+Total_Num_Orders_vec <- ifelse(is.na(Total_Num_Orders_vec), 0, Total_Num_Orders_vec)
+sdi_df <- mutate(sdi_df, Total.Number.of.Orders = Total_Num_Orders_vec)
+sdi_df$Total.Number.of.Orders
+
+#creating Total_Revenue field
+sdi_df <- mutate(sdi_df, Total.Revenue = Average.Order.Value * Total.Number.of.Orders)
+sdi_df$Total.Revenue
+
+#changing Last.Total.Number.of.Products.Bought NA to 0
+ltnopb_vec <- sdi_df$Last.Total.Number.of.Products.Bought
+ltnopb_vec <- ifelse(is.na(ltnopb_vec), 0, ltnopb_vec)
+sdi_df <- mutate(sdi_df, Last.Total.Number.of.Products.Bought = ltnopb_vec)
+sdi_df$Last.Total.Number.of.Products.Bought
+
+#changing Last.Order.Value NA to 0
+last_ord_val_vec <- sdi_df$Last.Order.Value
+last_ord_val_vec <- ifelse(is.na(last_ord_val_vec), 0, last_ord_val_vec)
+sdi_df <- mutate(sdi_df, Last.Order.Value = last_ord_val_vec)
+sdi_df$Last.Order.Value
+
+#changing Monetary.Rating NA to 0
+
+#changing Order.Frequency.Rating NA to 0
+
+#changing Order.Recency.Rating NA to 0
+
+#changing Abandoned.Cart.Counter NA to 0
+
+#changing Total.Number.of.Cart.Products NA to 0
+
+#changing Associated.Deals NA to 0
+
+#changing Days.To.Close NA to 0
+
+#changing Number.of.times.contacted NA to 0
+
+#changing Number.of.Notes NA to 0
+
+#changing Last.Order.Number NA to 0
+
+#changing Total.Number.of.Current.Orders NA to 0
+
+#changing Emails.Clicked NA to 0
+
+#changing Emails.Delivered NA to 0
+
+#changing Emails.Opened NA to 0
+
+#changing Follower.Count NA to 0
+
+#changing Klout.Score NA to 0
+
+#changing LinkedIn.Connections NA to 0
+
+#changing Twitter.Clicks NA to 0
+
+#changing Number.of.Form.Submissions  NA to 0
+
+#changing Number.of.Unique.Forms.Submitted NA to 0
+
+#changing Company.Size  NA to 0
+
+#changing Accessory....Anti.Fatigue.Mat NA to 0
+
+#changing Accessory...12.Port.Integrated.Powerstrip NA to 0
+
+#changing Accessory...Crossbar NA to 0
+
+#changing Frame...Deluxe..Memory.Control.Cable.Tray NA to 0
+
+#changing Frame...Plus..2.Button.Control.Cable.Tray NA to 0
+
+#changing Frame...Standard..2.Button.Control NA to 0
+
+#changing Top....Tan.Brown.Bamboo..30..X.60.. NA to 0
+
+#changing Top....White.Laminate..26..X.56.. NA to 0
+
+#changing Top...Beige.Bamboo..30..X.60.. NA to 0
+
+#changing Top...Black.Laminate..26..X.56.. NA to 0
+
+#changing Top...Black.Laminate..30..X.60.. NA to 0
+
+#changing Top...White.Laminate..30..X.60.. NA to 0
+
+#changing Average.Days.Between.Orders NA to 0
+
+#changing Abandoned.Cart.Recovery.Workflow.Conversion.Amount NA to 0
+
+#changing Total.Value.of.Abandoned.Cart NA to 0
+
+#changing Last.Products.Bought.Product.1.Price NA to 0
+
+#changing Last.Products.Bought.Product.2.Price NA to 0
+
+#changing Last.Products.Bought.Product.3.Price NA to 0
+
+#changing Shopping.Cart.Customer.ID NA to 0
+
+#changing First.Order.Value NA to 0
+
+na_count <- sapply(sdi_df, function(y) sum(length(which(is.na(y)))))
+na_count
 glimpse(sdi_df)
+
+
+
+x <- model.matrix(Total_Revenue~., data = sdi_df)[,-1]         
+y <- sdi_df$Total_Revenue	
+
+library(glmnet)
+grid = 10^seq(10,-2,length=100)
+lasso.sdi <- glmnet(x,y,family="binomial", alpha=1, lambda=grid)
+dim(coef(lasso.sdi))
+
+head(sdi_df)
 na_count <- sapply(sdi_df, function(y) sum(length(which(is.na(y)))))
 na_count
